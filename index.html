@@ -8,8 +8,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@700&family=Caveat:wght@700&display=swap"
         rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
     <style>
         :root {
             --primary: #ff8fa3;
@@ -90,18 +92,18 @@
             width: 100%;
             max-width: 900px;
             background: var(--glass);
-            backdrop-filter: blur(25px);
-            border: 3px solid white;
+            backdrop-filter: blur(40px) saturate(180%);
+            border: 4px solid white;
             outline: 2px solid var(--border);
-            border-radius: 40px;
+            border-radius: 50px;
             padding: 4rem;
             position: relative;
-            box-shadow: 0 40px 100px var(--shadow-color), inset 0 0 20px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 50px 100px var(--shadow-color);
             text-align: center;
             z-index: 10;
             opacity: 0;
-            transform: translateY(20px);
-            transition: 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+            transform: scale(0.9) translateY(40px);
+            transition: opacity 1.5s, transform 1s;
         }
 
         .container.active {
@@ -449,27 +451,55 @@
             margin-top: 10px;
         }
 
+        /* Scrapbook Polaroid Style */
         .message-board {
-            margin: 2rem 0;
-            padding: 2rem;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 20px;
-            border: 1px dashed rgba(255, 255, 255, 0.1);
-            text-align: left;
+            margin: 4rem 0;
+            padding: 0;
+            background: transparent;
+            border: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 15px 15px 40px 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transform: rotate(-2deg);
+            transition: 0.3s;
+            max-width: 250px;
+            border-radius: 4px;
+        }
+
+        .polaroid:nth-child(even) {
+            transform: rotate(3deg);
+        }
+
+        .polaroid:hover {
+            transform: scale(1.1) rotate(0deg);
+            z-index: 20;
+        }
+
+        .polaroid-img {
+            width: 100%;
+            height: 150px;
+            background: var(--bg-start);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            border-radius: 4px;
         }
 
         .reason-item {
-            margin-bottom: 0.8rem;
-            color: #cbd5e1;
-            list-style: none;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .reason-item::before {
-            content: '✨';
-            position: absolute;
-            left: 0;
+            font-family: 'Caveat', cursive;
+            font-size: 1.4rem;
+            color: var(--text-main);
+            margin-top: 15px;
+            line-height: 1.2;
+            text-align: center;
         }
 
         .certificate-box {
@@ -659,11 +689,22 @@
     </div>
 
     <div class="message-board">
-        <h3 style="color: var(--accent); margin-bottom: 1rem;">📝 Evidence Log: #ONLY_ISHU</h3>
-        <div class="reason-item">That tease was 100% fake. My heart only knows one "Baby" and that's you.</div>
-        <div class="reason-item">IP-PRIME system confirms zero compatibility with any other human.</div>
-        <div class="reason-item">I was just being a "Thug" and got caught. Please don't be jealous.</div>
-        <div class="reason-item">Your smile is the only thing that makes my day sync properly.</div>
+        <div class="polaroid">
+            <div class="polaroid-img">🦢</div>
+            <div class="reason-item">My heart only knows one "Baby" and that's you.</div>
+        </div>
+        <div class="polaroid">
+            <div class="polaroid-img">🔐</div>
+            <div class="reason-item">System confirms 0% interest in anyone else.</div>
+        </div>
+        <div class="polaroid">
+            <div class="polaroid-img">🍭</div>
+            <div class="reason-item">I was just being a "Thug" and got caught. Sowwy!</div>
+        </div>
+        <div class="polaroid">
+            <div class="polaroid-img">🌸</div>
+            <div class="reason-item">Your smile = 100% System Harmony.</div>
+        </div>
     </div>
 
     <div class="certificate-box" style="background: #fff1f2; border-color: #fbcfe8;">
@@ -746,6 +787,8 @@
 </div>
 
 <div id="player"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+<script src="https://unpkg.com/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
 <script>
     let ytPlayer;
     let isVerseEntered = false;
@@ -766,8 +809,17 @@
 
     function enterVerse() {
         isVerseEntered = true;
-        document.getElementById('start-overlay').classList.add('hidden');
+        gsap.to('#start-overlay', {
+            opacity: 0, scale: 1.2, duration: 1, onComplete: () => {
+                document.getElementById('start-overlay').style.display = 'none';
+            }
+        });
+
         document.getElementById('main-container').classList.add('active');
+
+        // GSAP Entrances
+        gsap.from(".polaroid", { scale: 0, rotation: 180, duration: 1, stagger: 0.2, ease: "back.out" });
+        gsap.from(".coupon-card", { y: 100, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power2.out" });
 
         if (ytPlayer && ytPlayer.playVideo) {
             ytPlayer.playVideo();
@@ -898,6 +950,14 @@
     });
 
     document.addEventListener('DOMContentLoaded', () => {
+        // Initiate Tilt
+        VanillaTilt.init(document.querySelector(".container"), {
+            max: 5,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.2,
+        });
+
         let count = 0;
         const interval = setInterval(() => {
             count += 20;
@@ -917,3 +977,4 @@
 </body>
 
 </html>
+```
