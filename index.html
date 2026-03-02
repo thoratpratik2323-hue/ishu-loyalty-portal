@@ -156,6 +156,121 @@
             letter-spacing: 2px;
         }
 
+        /* Heart Scanner */
+        .scanner-section {
+            margin: 4rem 0;
+            padding: 2rem;
+            background: rgba(167, 139, 250, 0.05);
+            border-radius: 24px;
+            border: 1px solid rgba(167, 139, 250, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+            display: none;
+            z-index: 10;
+        }
+
+        @keyframes scan {
+            0% {
+                top: 0;
+            }
+
+            100% {
+                top: 100%;
+            }
+        }
+
+        .scan-btn {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 auto;
+        }
+
+        .scan-btn:hover {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 20px rgba(167, 139, 250, 0.4);
+        }
+
+        /* Gussa Meter */
+        .gussa-meter-box {
+            margin: 3rem 0;
+            text-align: left;
+        }
+
+        .gussa-meter-box label {
+            display: block;
+            margin-bottom: 1rem;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        input[type=range] {
+            width: 100%;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.1);
+            height: 10px;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background: var(--secondary);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
+        }
+
+        /* Vault */
+        .vault-container {
+            margin-top: 3rem;
+            display: none;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .gift-box-icon {
+            font-size: 5rem;
+            cursor: pointer;
+            transition: 0.5s;
+        }
+
+        .gift-box-icon.open {
+            transform: scale(1.2) rotate(360deg);
+        }
+
         /* Message Board */
         .message-board {
             margin: 3rem 0;
@@ -358,8 +473,31 @@
             </p>
         </div>
 
-        <button class="forgive-btn" onclick="forgiveHim()">The Forgiveness Button</button>
+        <div class="scanner-section" id="heart-scanner">
+            <div id="scan-line" class="scan-line"></div>
+            <button class="scan-btn" id="btn-scan" onclick="startScan()">
+                <span>🔍</span> INITIATE HEART BIO-SCAN
+            </button>
+            <div id="scan-result"
+                style="margin-top:20px; font-family:'JetBrains Mono', monospace; font-size:0.9rem; color:#60a5fa; min-height:40px;">
+            </div>
+        </div>
+
+        <div class="gussa-meter-box">
+            <label id="gussa-label">🌡️ ISHU'S GUSSA LEVEL: 100%</label>
+            <input type="range" id="gussa-slider" min="0" max="100" value="100" oninput="updateGussa(this.value)">
+            <p style="font-size: 0.8rem; color: #64748b; margin-top: 10px;">(Slide to 0% to unlock Forgiveness Mode)</p>
+        </div>
+
+        <button class="forgive-btn" id="btn-forgive" onclick="forgiveHim()"
+            style="opacity: 0.3; pointer-events: none;">The Forgiveness Button</button>
         <div id="forgiveness-status">Mistake Deleted! Love Restored! ❤️✨</div>
+
+        <div class="vault-container" id="vault-box">
+            <div class="gift-box-icon" onclick="openVault()">🎁</div>
+            <p style="color:var(--accent); margin-top:1rem; font-weight:700;">A Secret Gift for the Queen of IP Verse 💎
+            </p>
+        </div>
 
         <div class="offerings-grid">
             <div class="offer-card" onclick="alert('Offer Accepted: Favorite Ice Cream coming soon!')">
@@ -383,76 +521,136 @@
 
     <!-- Celebration Logic -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script>
-        function forgiveHim() {
-            // Confetti Blast with Roses
-            const count = 200;
-            const defaults = {
-                origin: { y: 0.7 }
-            };
+    function updateGussa(val) {
+    const label = document.getElementById('gussa-label');
+    const btn = document.getElementById('btn-forgive');
+    label.innerText = `🌡️ ISHU'S GUSSA LEVEL: ${val}%`;
 
-            function fire(particleRatio, opts) {
-                confetti({
-                    ...defaults,
-                    ...opts,
-                    particleCount: Math.floor(count * particleRatio)
-                });
-            }
+    // Interaction: Brightness modulation
+    document.querySelector('.container').style.boxShadow = `0 25px 50px -12px rgba(236,72,153, ${val/100 * 0.5})`;
 
-            fire(0.25, {
-                spread: 26,
-                startVelocity: 55,
-                colors: ['#ec4899', '#f43f5e', '#ffffff']
-            });
-            fire(0.2, {
-                spread: 60,
-                colors: ['#a78bfa', '#fde047']
-            });
-            fire(0.35, {
-                spread: 100,
-                decay: 0.91,
-                scalar: 0.8
-            });
-            fire(0.1, {
-                spread: 120,
-                startVelocity: 25,
-                decay: 0.92,
-                scalar: 1.2
-            });
-            fire(0.1, {
-                spread: 120,
-                startVelocity: 45,
-            });
+    if (val == 0) {
+    label.innerText = `🌡️ GUSSA LEVEL: 0% (PEACE REACHED! 🕊️)`;
+    label.style.color = '#10b981';
+    btn.style.opacity = '1';
+    btn.style.pointerEvents = 'all';
+    btn.style.animation = 'pulsePink 2s infinite';
+    } else {
+    label.style.color = '#94a3b8';
+    btn.style.opacity = '0.3';
+    btn.style.pointerEvents = 'none';
+    }
+    }
 
-            // Status Update
-            const status = document.getElementById('forgiveness-status');
-            status.classList.add('active');
+    function startScan() {
+    const line = document.getElementById('scan-line');
+    const result = document.getElementById('scan-result');
+    const btn = document.getElementById('btn-scan');
 
-            // Voice Command (Virtual)
-            try {
-                const speech = new SpeechSynthesisUtterance("Forgiveness protocol initiated. Pratik is happy again! Agent Purple is the best.");
-                speech.rate = 1.1;
-                window.speechSynthesis.speak(speech);
-            } catch (e) { }
+    btn.disabled = true;
+    line.style.display = 'block';
+    line.style.animation = 'scan 2s linear 2';
+    result.innerText = "Analyzing Heart Chambers...";
 
-            setTimeout(() => {
-                alert("💖 Message from IP-PRIME: Database updated. Loyalty confirmed. Gussa khatam! 💖");
-            }, 1000);
-        }
+    setTimeout(() => {
+    result.innerText = "Targeting Emotional Core... [ISHIKA_VIBRATIONS_DETECTED]";
+    }, 1500);
 
-        // Animated Gauge Entry
-        document.addEventListener('DOMContentLoaded', () => {
-            const val = document.querySelector('.gauge-value');
-            let count = 0;
-            const interval = setInterval(() => {
-                count += 10;
-                if (count > 1000) {
-                    count = 1000;
-                    clearInterval(interval);
-                }
-                val.innerText = count + '%';
-            }, 20);
-        });
+    setTimeout(() => {
+    line.style.display = 'none';
+    result.innerHTML = "<span style='color:#10b981'>✅ BIO-SCAN COMPLETE:</span><br>Primary Focus: Ishika (100%)<br>Other
+    Baby Records: [0 FOUND / DELETED]<br>Warning: Heart belongs completely to the Queen.";
+    try {
+    const speech = new SpeechSynthesisUtterance("Scan complete. System confirms 100% loyalty to Agent Purple. Pratik is
+    clean.");
+    window.speechSynthesis.speak(speech);
+    } catch(e) {}
+    }, 4000);
+    }
+
+    function openVault() {
+    const gift = document.querySelector('.gift-box-icon');
+    gift.classList.add('open');
+    setTimeout(() => {
+    gift.innerText = "💍";
+    alert("💎 IP Verse Mega Reward 💎\n\nYou found the 'Diamond Ring of Patience'!\n\nPratik says: This is for having to
+    bear with my stupid pranks. You are the best!");
+    }, 500);
+    }
+
+    function forgiveHim() {
+    // Confetti Blast with Roses
+    const count = 200;
+    const defaults = {
+    origin: { y: 0.7 }
+    };
+
+    function fire(particleRatio, opts) {
+    confetti({
+    ...defaults,
+    ...opts,
+    particleCount: Math.floor(count * particleRatio)
+    });
+    }
+
+    fire(0.25, {
+    spread: 26,
+    startVelocity: 55,
+    colors: ['#ec4899', '#f43f5e', '#ffffff']
+    });
+    fire(0.2, {
+    spread: 60,
+    colors: ['#a78bfa', '#fde047']
+    });
+    fire(0.35, {
+    spread: 100,
+    decay: 0.91,
+    scalar: 0.8
+    });
+    fire(0.1, {
+    spread: 120,
+    startVelocity: 25,
+    decay: 0.92,
+    scalar: 1.2
+    });
+    fire(0.1, {
+    spread: 120,
+    startVelocity: 45,
+    });
+
+    // Status Update
+    const status = document.getElementById('forgiveness-status');
+    status.classList.add('active');
+
+    // Reveal Vault
+    document.getElementById('vault-box').style.display = 'block';
+
+    // Voice Command (Virtual)
+    try {
+    const speech = new SpeechSynthesisUtterance("Forgiveness protocol initiated. Pratik is happy again! Agent Purple is
+    the best.");
+    speech.rate = 1.1;
+    window.speechSynthesis.speak(speech);
+    } catch(e) {}
+
+    setTimeout(() => {
+    alert("💖 Message from IP-PRIME: Database updated. Loyalty confirmed. Gussa khatam! 💖");
+    }, 1000);
+    }
+
+    // Animated Gauge Entry
+    document.addEventListener('DOMContentLoaded', () => {
+    const val = document.querySelector('.gauge-value');
+    let count = 0;
+    const interval = setInterval(() => {
+    count += 10;
+    if (count > 1000) {
+    count = 1000;
+    clearInterval(interval);
+    }
+    val.innerText = count + '%';
+    }, 20);
+    });
     </script>
 </body>
 
