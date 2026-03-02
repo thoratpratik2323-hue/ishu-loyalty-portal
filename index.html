@@ -73,6 +73,57 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             text-align: center;
             z-index: 1;
+            /* Start hidden to avoid confusion before enter */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: 1s ease;
+        }
+
+        .container.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Start Overlay */
+        #start-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #0f172a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            flex-direction: column;
+            transition: 1s ease;
+        }
+
+        #start-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(1.1);
+        }
+
+        .enter-btn {
+            background: linear-gradient(135deg, #a78bfa 0%, #ec4899 100%);
+            border: none;
+            padding: 1.5rem 4rem;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 800;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(167, 139, 250, 0.5);
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .enter-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 50px rgba(236, 72, 153, 0.8);
         }
 
         h1 {
@@ -433,8 +484,14 @@
 </head>
 
 <body>
+    <div id="start-overlay">
+        <div class="status-badge" style="margin-bottom: 2rem;">Secure Connection Established</div>
+        <button class="enter-btn" onclick="enterVerse()">Enter IP Verse</button>
+        <p style="color: #64748b; margin-top: 2rem; font-size: 0.9rem;">(Music & Experience requires first click)</p>
+    </div>
+
     <div class="glow-sphere"></div>
-    <div class="container">
+    <div class="container" id="main-container">
         <span class="status-badge">💖 Official Loyalty Report 💖</span>
         <h1>I'm Sorry, Ishu!</h1>
         <p style="color: #94a3b8; margin-bottom: 2rem;">A formal analysis of my loyalty levels and proof that you are
@@ -554,33 +611,36 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script>
         let ytPlayer;
+        let isVerseEntered = false;
+
         function onYouTubeIframeAPIReady() {
             ytPlayer = new YT.Player('player', {
                 height: '0',
                 width: '0',
                 videoId: 'm1Fl0ayKtNw',
                 playerVars: {
-                    'autoplay': 1,
+                    'autoplay': 0,
                     'controls': 0,
                     'loop': 1,
                     'playlist': 'm1Fl0ayKtNw'
-                },
-                events: {
-                    'onReady': onPlayerReady
                 }
             });
         }
 
-        function onPlayerReady(event) {
-            // Browsers block autoplay with sound. We'll try to play.
-            event.target.playVideo();
+        function enterVerse() {
+            isVerseEntered = true;
+            document.getElementById('start-overlay').classList.add('hidden');
+            document.getElementById('main-container').classList.add('active');
 
-            // Fallback: Play on first click anywhere if browser blocked it
-            document.body.addEventListener('click', () => {
-                if (ytPlayer && ytPlayer.getPlayerState() !== 1) {
-                    ytPlayer.playVideo();
-                }
-            }, { once: true });
+            if (ytPlayer && ytPlayer.playVideo) {
+                ytPlayer.playVideo();
+            }
+
+            // Re-auth speech
+            try {
+                const speech = new SpeechSynthesisUtterance("Welcome back, Queen of IP Verse. Experience authorized.");
+                window.speechSynthesis.speak(speech);
+            } catch (e) { }
         }
 
         function updateGussa(val) {
