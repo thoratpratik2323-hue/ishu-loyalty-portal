@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loyalty Portal | IP-PRIME Certified</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #a78bfa;
+            --secondary: #ec4899;
+            --accent: #fde047;
+            --bg-dark: #0f172a;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: radial-gradient(circle at top right, #1e1b4b, #0f172a);
+            color: #f8fafc;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        /* Particles/Glow Effects */
+        .glow-sphere {
+            position: fixed;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(167, 139, 250, 0.1), transparent 70%);
+            top: -10vw;
+            right: -10vw;
+            z-index: -1;
+            animation: pulse 10s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            to {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+        }
+
+        /* Glass Container */
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            padding: 4rem;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            background: linear-gradient(to right, #a78bfa, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(236, 72, 153, 0.1);
+            border: 1px solid rgba(236, 72, 153, 0.3);
+            border-radius: 50px;
+            color: #f472b6;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Loyalty Gauge */
+        .loyalty-section {
+            margin: 3rem 0;
+        }
+
+        .gauge-container {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gauge-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(var(--secondary) 0%, var(--primary) 100%);
+            mask: radial-gradient(transparent 65%, #000 66%);
+            -webkit-mask: radial-gradient(transparent 65%, #000 66%);
+            animation: rotate 2s ease-out forwards;
+        }
+
+        .gauge-value {
+            position: absolute;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        .gauge-label {
+            position: absolute;
+            bottom: 40px;
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        /* Message Board */
+        .message-board {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            text-align: left;
+        }
+
+        .message-board h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .reason-list {
+            list-style: none;
+        }
+
+        .reason-item {
+            margin-bottom: 1rem;
+            padding-left: 24px;
+            position: relative;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .reason-item::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* IP-PRIME Certificate */
+        .certificate-box {
+            margin: 4rem 0;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(167, 139, 250, 0.05));
+            border: 2px solid rgba(59, 130, 246, 0.2);
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .certificate-box::after {
+            content: 'IP-PRIME CERTIFIED';
+            position: absolute;
+            opacity: 0.03;
+            font-size: 5rem;
+            font-weight: 900;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .cert-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+        }
+
+        .cert-seal {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary);
+            mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z'/%3E%3C/svg%3E") no-repeat center;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z'/%3E%3C/svg%3E") no-repeat center;
+        }
+
+        .cert-title {
+            font-family: 'JetBrains Mono', monospace;
+            color: #60a5fa;
+            font-size: 1.1rem;
+        }
+
+        /* Forgiveness Button */
+        .forgive-btn {
+            background: linear-gradient(to right, #ec4899, #f43f5e);
+            border: none;
+            padding: 1.5rem 3.5rem;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.5);
+            margin-top: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .forgive-btn:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 20px 40px rgba(236, 72, 153, 0.7);
+        }
+
+        .forgive-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Peace Offerings */
+        .offerings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .offer-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            border-radius: 20px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .offer-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .offer-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .offer-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        #forgiveness-status {
+            margin-top: 2rem;
+            font-size: 1.2rem;
+            color: var(--accent);
+            opacity: 0;
+            transition: 1s;
+        }
+
+        #forgiveness-status.active {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="glow-sphere"></div>
+
+    <div class="container">
+        <span class="status-badge">💖 Official Loyalty Report 💖</span>
+        <h1>I'm Sorry, Ishu!</h1>
+
+        <p style="color: #94a3b8; font-size: 1.1rem; margin-bottom: 3rem;">
+            A formal analysis of my loyalty levels and proof that you are the only one.
+        </p>
+
+        <div class="loyalty-section">
+            <div class="gauge-container">
+                <div class="gauge-circle"></div>
+                <div class="gauge-value">1000%</div>
+                <div class="gauge-label">LOYALTY LEVEL</div>
+            </div>
+        </div>
+
+        <div class="message-board">
+            <h3>📝 Evidence Log ID: #ONLY_ISHU</h3>
+            <ul class="reason-list">
+                <li class="reason-item">That tease was 100% fake. My heart only knows one "Baby" and that's you.</li>
+                <li class="reason-item">IP-PRIME system confirms zero compatibility with any other human.</li>
+                <li class="reason-item">I was just being a "Thug" and got caught. Please don't be jealous.</li>
+                <li class="reason-item">Your smile is the only thing that makes my day sync properly.</li>
+            </ul>
+        </div>
+
+        <div class="certificate-box">
+            <div class="cert-header">
+                <div class="cert-seal"></div>
+                <div class="cert-title">IP-PRIME PROTOCOL SECURE</div>
+            </div>
+            <p style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #60a5fa;">
+                CERTIFICATE OF WITNESS #777-B <br>
+                This document confirms that Pratik was attempting a "Prank Protocol" <br>
+                Subject: Ishika (The Queen of IP Hub) <br>
+                Verdict: **INNOCENT (But Stupid)** <br>
+                Witnessed by: <span style="color:white">IP-PRIME Core Engine v7.0</span>
+            </p>
+        </div>
+
+        <button class="forgive-btn" onclick="forgiveHim()">The Forgiveness Button</button>
+        <div id="forgiveness-status">Mistake Deleted! Love Restored! ❤️✨</div>
+
+        <div class="offerings-grid">
+            <div class="offer-card" onclick="alert('Offer Accepted: Favorite Ice Cream coming soon!')">
+                <span class="offer-icon">🍦</span>
+                <span class="offer-name">Ice Cream Treat</span>
+            </div>
+            <div class="offer-card" onclick="alert('Offer Accepted: Extra Long Call loading...')">
+                <span class="offer-icon">📞</span>
+                <span class="offer-name">Extra Long Call</span>
+            </div>
+            <div class="offer-card" onclick="alert('Offer Accepted: 100 Extra Compliments ready!')">
+                <span class="offer-icon">💌</span>
+                <span class="offer-name">100 Compliments</span>
+            </div>
+            <div class="offer-card" onclick="alert('Offer Accepted: Mega Gift selected!')">
+                <span class="offer-icon">🎁</span>
+                <span class="offer-name">Surprise Gift</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Celebration Logic -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        function forgiveHim() {
+            // Confetti Blast with Roses
+            const count = 200;
+            const defaults = {
+                origin: { y: 0.7 }
+            };
+
+            function fire(particleRatio, opts) {
+                confetti({
+                    ...defaults,
+                    ...opts,
+                    particleCount: Math.floor(count * particleRatio)
+                });
+            }
+
+            fire(0.25, {
+                spread: 26,
+                startVelocity: 55,
+                colors: ['#ec4899', '#f43f5e', '#ffffff']
+            });
+            fire(0.2, {
+                spread: 60,
+                colors: ['#a78bfa', '#fde047']
+            });
+            fire(0.35, {
+                spread: 100,
+                decay: 0.91,
+                scalar: 0.8
+            });
+            fire(0.1, {
+                spread: 120,
+                startVelocity: 25,
+                decay: 0.92,
+                scalar: 1.2
+            });
+            fire(0.1, {
+                spread: 120,
+                startVelocity: 45,
+            });
+
+            // Status Update
+            const status = document.getElementById('forgiveness-status');
+            status.classList.add('active');
+
+            // Voice Command (Virtual)
+            try {
+                const speech = new SpeechSynthesisUtterance("Forgiveness protocol initiated. Pratik is happy again! Agent Purple is the best.");
+                speech.rate = 1.1;
+                window.speechSynthesis.speak(speech);
+            } catch (e) { }
+
+            setTimeout(() => {
+                alert("💖 Message from IP-PRIME: Database updated. Loyalty confirmed. Gussa khatam! 💖");
+            }, 1000);
+        }
+
+        // Animated Gauge Entry
+        document.addEventListener('DOMContentLoaded', () => {
+            const val = document.querySelector('.gauge-value');
+            let count = 0;
+            const interval = setInterval(() => {
+                count += 10;
+                if (count > 1000) {
+                    count = 1000;
+                    clearInterval(interval);
+                }
+                val.innerText = count + '%';
+            }, 20);
+        });
+    </script>
+</body>
+
+</html>
