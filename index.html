@@ -72,16 +72,53 @@
             position: relative;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             text-align: center;
-            z-index: 1;
-            /* Start hidden to avoid confusion before enter */
+            z-index: 10;
             opacity: 0;
             transform: translateY(20px);
             transition: 1s ease;
+            box-shadow: 0 0 50px rgba(236, 72, 153, 0.2);
         }
 
         .container.active {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        /* Floating Hearts & Glitter */
+        .bubble {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            animation: float-up 5s linear infinite;
+            filter: blur(1px);
+        }
+
+        @keyframes float-up {
+            from {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+
+            to {
+                transform: translateY(-10vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .cursor-trail {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            width: 10px;
+            height: 10px;
+            background: var(--secondary);
+            border-radius: 50%;
+            transition: transform 0.1s linear;
+            box-shadow: 0 0 10px var(--secondary);
         }
 
         /* Start Overlay */
@@ -91,7 +128,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: #0f172a;
+            background: radial-gradient(circle at center, #1e1b4b, #0f172a);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -436,9 +473,66 @@
             transform: scale(1.05);
         }
 
+        /* Compliment Machine */
+        .compliment-box {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: rgba(236, 72, 153, 0.05);
+            border-radius: 24px;
+            border: 1px solid rgba(236, 72, 153, 0.2);
+        }
+
+        .comp-display {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent);
+            min-height: 2.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+        }
+
+        .comp-btn {
+            background: var(--glass);
+            border: 2px solid var(--secondary);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .comp-btn:hover {
+            background: var(--secondary);
+            box-shadow: 0 0 15px var(--secondary);
+        }
+
+        /* Mood Sync Icons */
+        .mood-grid {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .mood-icon {
+            font-size: 3rem;
+            cursor: pointer;
+            filter: grayscale(1);
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .mood-icon.active {
+            filter: grayscale(0);
+            transform: scale(1.3);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Vault */
         .vault-container {
+            margin-top: 3rem;
             display: none;
-            margin: 2rem 0;
+            animation: fadeIn 1s ease;
         }
 
         .gift-box-icon {
@@ -491,9 +585,21 @@
     </div>
 
     <div class="glow-sphere"></div>
+    <div id="bubbles-container"></div>
+
     <div class="container" id="main-container">
-        <span class="status-badge">💖 Official Loyalty Report 💖</span>
-        <h1>I'm Sorry, Ishu!</h1>
+        <span class="status-badge">💖 Official Cute Loyalty Report 💖</span>
+        <h1 id="main-title">I'm Sorry, Ishu!</h1>
+
+        <div class="mood-sync-box" style="margin-bottom: 3rem;">
+            <p style="color: #64748b; font-size: 0.8rem; margin-bottom: 1rem;">SYNCING ISHU'S MOOD...</p>
+            <div class="mood-grid">
+                <div class="mood-icon" onclick="syncMood('angry', this)">😡</div>
+                <div class="mood-icon active" onclick="syncMood('neutral', this)">🤔</div>
+                <div class="mood-icon" onclick="syncMood('happy', this)">😊</div>
+            </div>
+            <p id="mood-text" style="color: var(--primary); font-weight: 600;">System waiting for forgiveness...</p>
+        </div>
         <p style="color: #94a3b8; margin-bottom: 2rem;">A formal analysis of my loyalty levels and proof that you are
             the only one.</p>
 
@@ -560,6 +666,12 @@
         <button class="forgive-btn" id="btn-forgive" onclick="forgiveHim()"
             style="opacity: 0.3; pointer-events: none;">The Forgiveness Button</button>
         <div id="forgiveness-status">Mistake Deleted! Love Restored! ❤️✨</div>
+
+        <div class="compliment-box">
+            <h3 style="color: var(--secondary);">✨ DAILY ISHU COMPLIMENT MACHINE</h3>
+            <div class="comp-display" id="comp-display">Wait for it...</div>
+            <button class="comp-btn" onclick="spinCompliment()">SPIN FOR LOVE</button>
+        </div>
 
         <div class="coupon-section">
             <h3 style="color: #ec4899; margin-bottom: 2rem;">📂 REDEEMABLE SORRY COUPONS</h3>
@@ -686,23 +798,76 @@
             alert(`🎫 COUPON REDEEMED: ${code}\n\nThis has been logged in Pratik's permanent debt database. You can claim it whenever you feel like!`);
         }
 
-        const memories = [
-            "Remember how we started in IP Hub? Best day ever.",
-            "Your 'Agent Purple' avatar is the coolest thing in IP Verse.",
-            "I could watch you study for hours (even if I'm not studying).",
-            "You are the only person who can handle my stupid pranks.",
-            "My entire IP Verse is empty without you.",
-            "You are 10x more beautiful than any Diamond in the Vault."
+        const compliments = [
+            "Your eyes sparkle more than Three.js stars. ✨",
+            "You are the most beautiful part of the IP Verse. 🌌",
+            "My database only has storage for your memories. 💾",
+            "Your gussa is temporary, but my love is hardcoded. 💖",
+            "Even in 1000% load, my CPU only thinks of you. 🧠",
+            "You are the 'Admin' of my heart. 🔒",
+            "If Ishu is happy, IP-PRIME is happy. 😊",
+            "Downloading 1,000,000 roses for you... 🌹"
         ];
 
-        function showRandomMemory() {
-            const text = document.getElementById('memory-text');
-            const random = memories[Math.floor(Math.random() * memories.length)];
-            text.innerHTML = random;
-            text.style.animation = 'none';
-            text.offsetHeight; // trigger reflow
-            text.style.animation = 'fadeIn 0.5s forwards';
+        function spinCompliment() {
+            const display = document.getElementById('comp-display');
+            let j = 0;
+            const cycle = setInterval(() => {
+                display.innerText = compliments[Math.floor(Math.random() * compliments.length)];
+                j++;
+                if (j > 10) {
+                    clearInterval(cycle);
+                    confetti({ particleCount: 30, spread: 50, colors: ['#ec4899', '#fde047'] });
+                }
+            }, 100);
         }
+
+        function syncMood(mood, el) {
+            document.querySelectorAll('.mood-icon').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+            const text = document.getElementById('mood-text');
+            const container = document.getElementById('main-container');
+
+            if (mood === 'angry') {
+                text.innerText = "System Alert: Red Zone! Initiating emergency cuteness...";
+                container.style.boxShadow = "0 0 50px rgba(255, 0, 0, 0.3)";
+            } else if (mood === 'happy') {
+                text.innerText = "Mood Synced: Everything is beautiful! ❤️";
+                container.style.boxShadow = "0 0 50px rgba(16, 185, 129, 0.3)";
+                confetti({ particleCount: 100, spread: 70 });
+            } else {
+                text.innerText = "System Status: Waiting for Queen's command...";
+                container.style.boxShadow = "0 0 50px rgba(167, 139, 250, 0.2)";
+            }
+        }
+
+        function createBubble() {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            const size = Math.random() * 20 + 10;
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            bubble.style.left = Math.random() * 100 + 'vw';
+            bubble.innerHTML = ['❤️', '💖', '✨', '🌸', '🧸'][Math.floor(Math.random() * 5)];
+            bubble.style.fontSize = (size + 5) + 'px';
+            document.getElementById('bubbles-container').appendChild(bubble);
+            setTimeout(() => bubble.remove(), 5000);
+        }
+
+        setInterval(createBubble, 500);
+
+        // Cursor Trail
+        document.addEventListener('mousemove', (e) => {
+            const trail = document.createElement('div');
+            trail.className = 'cursor-trail';
+            trail.style.left = e.clientX + 'px';
+            trail.style.top = e.clientY + 'px';
+            document.body.appendChild(trail);
+            setTimeout(() => {
+                trail.style.transform = 'scale(0)';
+                setTimeout(() => trail.remove(), 200);
+            }, 100);
+        });
 
         document.addEventListener('DOMContentLoaded', () => {
             let count = 0;
@@ -715,7 +880,7 @@
             // Pulse the heart tele
             setInterval(() => {
                 const teleH = document.getElementById('tele-heart');
-                teleH.innerText = teleH.innerText === "Connected..." ? "💓 PULSING..." : "Connected...";
+                if (teleH) teleH.innerText = teleH.innerText === "Connected..." ? "💓 PULSING..." : "Connected...";
             }, 2000);
         });
     </script>
