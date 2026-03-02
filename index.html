@@ -521,136 +521,133 @@
 
     <!-- Celebration Logic -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    function updateGussa(val) {
-    const label = document.getElementById('gussa-label');
-    const btn = document.getElementById('btn-forgive');
-    label.innerText = `🌡️ ISHU'S GUSSA LEVEL: ${val}%`;
+    <script>
+        function updateGussa(val) {
+            const label = document.getElementById('gussa-label');
+            const btn = document.getElementById('btn-forgive');
+            label.innerText = `🌡️ ISHU'S GUSSA LEVEL: ${val}%`;
 
-    // Interaction: Brightness modulation
-    document.querySelector('.container').style.boxShadow = `0 25px 50px -12px rgba(236,72,153, ${val/100 * 0.5})`;
+            // Interaction: Brightness modulation
+            document.querySelector('.container').style.boxShadow = `0 25px 50px -12px rgba(236,72,153, ${val / 100 * 0.5})`;
 
-    if (val == 0) {
-    label.innerText = `🌡️ GUSSA LEVEL: 0% (PEACE REACHED! 🕊️)`;
-    label.style.color = '#10b981';
-    btn.style.opacity = '1';
-    btn.style.pointerEvents = 'all';
-    btn.style.animation = 'pulsePink 2s infinite';
-    } else {
-    label.style.color = '#94a3b8';
-    btn.style.opacity = '0.3';
-    btn.style.pointerEvents = 'none';
-    }
-    }
+            if (val == 0) {
+                label.innerText = `🌡️ GUSSA LEVEL: 0% (PEACE REACHED! 🕊️)`;
+                label.style.color = '#10b981';
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'all';
+                btn.style.animation = 'pulsePink 2s infinite';
+            } else {
+                label.style.color = '#94a3b8';
+                btn.style.opacity = '0.3';
+                btn.style.pointerEvents = 'none';
+            }
+        }
 
-    function startScan() {
-    const line = document.getElementById('scan-line');
-    const result = document.getElementById('scan-result');
-    const btn = document.getElementById('btn-scan');
+        function startScan() {
+            const line = document.getElementById('scan-line');
+            const result = document.getElementById('scan-result');
+            const btn = document.getElementById('btn-scan');
 
-    btn.disabled = true;
-    line.style.display = 'block';
-    line.style.animation = 'scan 2s linear 2';
-    result.innerText = "Analyzing Heart Chambers...";
+            btn.disabled = true;
+            line.style.display = 'block';
+            line.style.animation = 'scan 2s linear 2';
+            result.innerText = "Analyzing Heart Chambers...";
 
-    setTimeout(() => {
-    result.innerText = "Targeting Emotional Core... [ISHIKA_VIBRATIONS_DETECTED]";
-    }, 1500);
+            setTimeout(() => {
+                result.innerText = "Targeting Emotional Core... [ISHIKA_VIBRATIONS_DETECTED]";
+            }, 1500);
 
-    setTimeout(() => {
-    line.style.display = 'none';
-    result.innerHTML = "<span style='color:#10b981'>✅ BIO-SCAN COMPLETE:</span><br>Primary Focus: Ishika (100%)<br>Other
-    Baby Records: [0 FOUND / DELETED]<br>Warning: Heart belongs completely to the Queen.";
-    try {
-    const speech = new SpeechSynthesisUtterance("Scan complete. System confirms 100% loyalty to Agent Purple. Pratik is
-    clean.");
-    window.speechSynthesis.speak(speech);
-    } catch(e) {}
-    }, 4000);
-    }
+            setTimeout(() => {
+                line.style.display = 'none';
+                result.innerHTML = "<span style='color:#10b981'>✅ BIO-SCAN COMPLETE:</span><br>Primary Focus: Ishika (100%)<br>Other Baby Records: [0 FOUND / DELETED]<br>Warning: Heart belongs completely to the Queen.";
+                try {
+                    const speech = new SpeechSynthesisUtterance("Scan complete. System confirms 100% loyalty to Agent Purple. Pratik is clean.");
+                    window.speechSynthesis.speak(speech);
+                } catch (e) { }
+            }, 4000);
+        }
 
-    function openVault() {
-    const gift = document.querySelector('.gift-box-icon');
-    gift.classList.add('open');
-    setTimeout(() => {
-    gift.innerText = "💍";
-    alert("💎 IP Verse Mega Reward 💎\n\nYou found the 'Diamond Ring of Patience'!\n\nPratik says: This is for having to
-    bear with my stupid pranks. You are the best!");
-    }, 500);
-    }
+        function openVault() {
+            const gift = document.querySelector('.gift-box-icon');
+            gift.classList.add('open');
+            setTimeout(() => {
+                gift.innerText = "💍";
+                alert("💎 IP Verse Mega Reward 💎\n\nYou found the 'Diamond Ring of Patience'!\n\nPratik says: This is for having to bear with my stupid pranks. You are the best!");
+            }, 500);
+        }
 
-    function forgiveHim() {
-    // Confetti Blast with Roses
-    const count = 200;
-    const defaults = {
-    origin: { y: 0.7 }
-    };
+        function forgiveHim() {
+            // Confetti Blast with Roses
+            const count = 200;
+            const defaults = {
+                origin: { y: 0.7 }
+            };
 
-    function fire(particleRatio, opts) {
-    confetti({
-    ...defaults,
-    ...opts,
-    particleCount: Math.floor(count * particleRatio)
-    });
-    }
+            function fire(particleRatio, opts) {
+                confetti({
+                    ...defaults,
+                    ...opts,
+                    particleCount: Math.floor(count * particleRatio)
+                });
+            }
 
-    fire(0.25, {
-    spread: 26,
-    startVelocity: 55,
-    colors: ['#ec4899', '#f43f5e', '#ffffff']
-    });
-    fire(0.2, {
-    spread: 60,
-    colors: ['#a78bfa', '#fde047']
-    });
-    fire(0.35, {
-    spread: 100,
-    decay: 0.91,
-    scalar: 0.8
-    });
-    fire(0.1, {
-    spread: 120,
-    startVelocity: 25,
-    decay: 0.92,
-    scalar: 1.2
-    });
-    fire(0.1, {
-    spread: 120,
-    startVelocity: 45,
-    });
+            fire(0.25, {
+                spread: 26,
+                startVelocity: 55,
+                colors: ['#ec4899', '#f43f5e', '#ffffff']
+            });
+            fire(0.2, {
+                spread: 60,
+                colors: ['#a78bfa', '#fde047']
+            });
+            fire(0.35, {
+                spread: 100,
+                decay: 0.91,
+                scalar: 0.8
+            });
+            fire(0.1, {
+                spread: 120,
+                startVelocity: 25,
+                decay: 0.92,
+                scalar: 1.2
+            });
+            fire(0.1, {
+                spread: 120,
+                startVelocity: 45,
+            });
 
-    // Status Update
-    const status = document.getElementById('forgiveness-status');
-    status.classList.add('active');
+            // Status Update
+            const status = document.getElementById('forgiveness-status');
+            status.classList.add('active');
 
-    // Reveal Vault
-    document.getElementById('vault-box').style.display = 'block';
+            // Reveal Vault
+            document.getElementById('vault-box').style.display = 'block';
 
-    // Voice Command (Virtual)
-    try {
-    const speech = new SpeechSynthesisUtterance("Forgiveness protocol initiated. Pratik is happy again! Agent Purple is
-    the best.");
-    speech.rate = 1.1;
-    window.speechSynthesis.speak(speech);
-    } catch(e) {}
+            // Voice Command (Virtual)
+            try {
+                const speech = new SpeechSynthesisUtterance("Forgiveness protocol initiated. Pratik is happy again! Agent Purple is the best.");
+                speech.rate = 1.1;
+                window.speechSynthesis.speak(speech);
+            } catch (e) { }
 
-    setTimeout(() => {
-    alert("💖 Message from IP-PRIME: Database updated. Loyalty confirmed. Gussa khatam! 💖");
-    }, 1000);
-    }
+            setTimeout(() => {
+                alert("💖 Message from IP-PRIME: Database updated. Loyalty confirmed. Gussa khatam! 💖");
+            }, 1000);
+        }
 
-    // Animated Gauge Entry
-    document.addEventListener('DOMContentLoaded', () => {
-    const val = document.querySelector('.gauge-value');
-    let count = 0;
-    const interval = setInterval(() => {
-    count += 10;
-    if (count > 1000) {
-    count = 1000;
-    clearInterval(interval);
-    }
-    val.innerText = count + '%';
-    }, 20);
-    });
+        // Animated Gauge Entry
+        document.addEventListener('DOMContentLoaded', () => {
+            const val = document.querySelector('.gauge-value');
+            let count = 0;
+            const interval = setInterval(() => {
+                count += 10;
+                if (count > 1000) {
+                    count = 1000;
+                    clearInterval(interval);
+                }
+                val.innerText = count + '%';
+            }, 20);
+        });
     </script>
 </body>
 
