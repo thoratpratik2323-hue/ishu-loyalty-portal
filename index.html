@@ -142,6 +142,125 @@
             font-size: 3.5rem;
             font-weight: 800;
             color: white;
+            text-shadow: 0 0 20px var(--primary);
+        }
+
+        /* Telemetry Dashboard */
+        .telemetry-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .telemetry-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 16px;
+        }
+
+        .telemetry-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: #64748b;
+            letter-spacing: 1px;
+        }
+
+        .telemetry-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            color: #60a5fa;
+            margin-top: 5px;
+        }
+
+        /* Sorry Coupons */
+        .coupon-section {
+            margin: 4rem 0;
+        }
+
+        .coupon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .coupon-card {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(167, 139, 250, 0.1));
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            padding: 2rem;
+            border-radius: 16px;
+            position: relative;
+            cursor: pointer;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .coupon-card:hover {
+            transform: scale(1.05) rotate(2deg);
+            border-color: var(--secondary);
+            background: rgba(236, 72, 153, 0.15);
+        }
+
+        .coupon-title {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .coupon-desc {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        .coupon-stamp {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.7rem;
+            font-weight: 900;
+            color: var(--accent);
+            opacity: 0.5;
+            border: 1px solid var(--accent);
+            padding: 2px 5px;
+            transform: rotate(-15deg);
+        }
+
+        /* Memory Pulse */
+        .memory-pulse-zone {
+            margin: 4rem 0;
+            padding: 3rem;
+            background: radial-gradient(circle at center, rgba(167, 139, 250, 0.1), transparent);
+            border-radius: 50%;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .heart-pulse {
+            font-size: 4rem;
+            animation: pulseIn 1.5s infinite;
+        }
+
+        @keyframes pulseIn {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        #memory-text {
+            margin-top: 1rem;
+            font-style: italic;
+            color: #cbd5e1;
+            min-height: 2em;
         }
 
         .gauge-label {
@@ -329,6 +448,25 @@
             </div>
         </div>
 
+        <div class="telemetry-grid">
+            <div class="telemetry-card">
+                <div class="telemetry-label">Brain Focus System</div>
+                <div class="telemetry-value">Ishu 100% | Others 0%</div>
+            </div>
+            <div class="telemetry-card">
+                <div class="telemetry-label">Heartbeat Sync</div>
+                <div class="telemetry-value" id="tele-heart">Connected...</div>
+            </div>
+            <div class="telemetry-card">
+                <div class="telemetry-label">Decision Engine</div>
+                <div class="telemetry-value">Ishika > Everything</div>
+            </div>
+            <div class="telemetry-card">
+                <div class="telemetry-label">Current Thought</div>
+                <div class="telemetry-value">"She is so cute"</div>
+            </div>
+        </div>
+
         <div class="message-board">
             <h3 style="color: var(--accent); margin-bottom: 1rem;">📝 Evidence Log: #ONLY_ISHU</h3>
             <div class="reason-item">That tease was 100% fake. My heart only knows one "Baby" and that's you.</div>
@@ -365,6 +503,37 @@
         <button class="forgive-btn" id="btn-forgive" onclick="forgiveHim()"
             style="opacity: 0.3; pointer-events: none;">The Forgiveness Button</button>
         <div id="forgiveness-status">Mistake Deleted! Love Restored! ❤️✨</div>
+
+        <div class="coupon-section">
+            <h3 style="color: #ec4899; margin-bottom: 2rem;">📂 REDEEMABLE SORRY COUPONS</h3>
+            <div class="coupon-grid">
+                <div class="coupon-card" onclick="redeemCoupon('FREE_ICE_CREAM')">
+                    <div class="coupon-title">Free Ice Cream Trip</div>
+                    <div class="coupon-desc">Valid anytime Pratik is being a "Thug".</div>
+                    <div class="coupon-stamp">IP-AUTHORIZED</div>
+                </div>
+                <div class="coupon-card" onclick="redeemCoupon('NO_TEASE_24H')">
+                    <div class="coupon-title">24H No-Tease Pass</div>
+                    <div class="coupon-desc">Pratik will remain strictly "Serious & Sweet".</div>
+                    <div class="coupon-stamp">VIP ACCESS</div>
+                </div>
+                <div class="coupon-card" onclick="redeemCoupon('LONG_DRIVE')">
+                    <div class="coupon-title">Long Drive & Snacks</div>
+                    <div class="coupon-desc">A peaceful journey to anywhere you want.</div>
+                    <div class="coupon-stamp">UNLIMITED</div>
+                </div>
+                <div class="coupon-card" onclick="redeemCoupon('CHOICE_OF_MOVIE')">
+                    <div class="coupon-title">Movie Monopoly</div>
+                    <div class="coupon-desc">Pratik has zero voting rights for the next movie.</div>
+                    <div class="coupon-stamp">GOVERNANCE</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="memory-pulse-zone" onclick="showRandomMemory()">
+            <div class="heart-pulse">❤️</div>
+            <div id="memory-text">Click the heart to see why you are special...</div>
+        </div>
 
         <div class="vault-container" id="vault-box">
             <div class="gift-box-icon" onclick="openVault()">🎁</div>
@@ -422,6 +591,29 @@
             alert("Found: Diamond Ring of Patience! 💎");
         }
 
+        function redeemCoupon(code) {
+            confetti({ particleCount: 50, colors: ['#ff0000', '#00ff00'] });
+            alert(`🎫 COUPON REDEEMED: ${code}\n\nThis has been logged in Pratik's permanent debt database. You can claim it whenever you feel like!`);
+        }
+
+        const memories = [
+            "Remember how we started in IP Hub? Best day ever.",
+            "Your 'Agent Purple' avatar is the coolest thing in IP Verse.",
+            "I could watch you study for hours (even if I'm not studying).",
+            "You are the only person who can handle my stupid pranks.",
+            "My entire IP Verse is empty without you.",
+            "You are 10x more beautiful than any Diamond in the Vault."
+        ];
+
+        function showRandomMemory() {
+            const text = document.getElementById('memory-text');
+            const random = memories[Math.floor(Math.random() * memories.length)];
+            text.innerHTML = random;
+            text.style.animation = 'none';
+            text.offsetHeight; // trigger reflow
+            text.style.animation = 'fadeIn 0.5s forwards';
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             let count = 0;
             const interval = setInterval(() => {
@@ -429,6 +621,12 @@
                 if (count > 1000) { count = 1000; clearInterval(interval); }
                 document.getElementById('loyalty-val').innerText = count + '%';
             }, 30);
+
+            // Pulse the heart tele
+            setInterval(() => {
+                const teleH = document.getElementById('tele-heart');
+                teleH.innerText = teleH.innerText === "Connected..." ? "💓 PULSING..." : "Connected...";
+            }, 2000);
         });
     </script>
 </body>
