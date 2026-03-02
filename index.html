@@ -12,12 +12,18 @@
         rel="stylesheet">
     <style>
         :root {
-            --primary: #a78bfa;
-            --secondary: #ec4899;
-            --accent: #fde047;
-            --bg-dark: #0f172a;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
+            --primary: #f472b6;
+            /* Hot Pink */
+            --secondary: #fb7185;
+            /* Soft Rose */
+            --accent: #fef08a;
+            /* Soft Yellow */
+            --bg-dark: #fff1f2;
+            /* Ultra Soft Pink Background */
+            --glass: rgba(255, 255, 255, 0.8);
+            /* Milky Glass */
+            --border: rgba(244, 114, 182, 0.2);
+            --text-main: #be185d;
         }
 
         * {
@@ -28,8 +34,8 @@
 
         body {
             font-family: 'Outfit', sans-serif;
-            background: radial-gradient(circle at top right, #1e1b4b, #0f172a);
-            color: #f8fafc;
+            background: linear-gradient(135deg, #fff1f2 0%, #fae8ff 100%);
+            color: var(--text-main);
             min-height: 100vh;
             overflow-x: hidden;
             display: flex;
@@ -65,18 +71,17 @@
             width: 100%;
             max-width: 900px;
             background: var(--glass);
-            backdrop-filter: blur(25px);
-            border: 1px solid var(--border);
-            border-radius: 32px;
+            backdrop-filter: blur(20px);
+            border: 4px solid #f9a8d4;
+            border-radius: 40px;
             padding: 4rem;
             position: relative;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 20px 60px rgba(244, 114, 182, 0.2);
             text-align: center;
             z-index: 10;
             opacity: 0;
             transform: translateY(20px);
             transition: 1s ease;
-            box-shadow: 0 0 50px rgba(236, 72, 153, 0.2);
         }
 
         .container.active {
@@ -577,315 +582,314 @@
     </style>
 </head>
 
-<body>
-    <div id="start-overlay">
-        <div class="status-badge" style="margin-bottom: 2rem;">Secure Connection Established</div>
-        <button class="enter-btn" onclick="enterVerse()">Enter IP Verse</button>
-        <p style="color: #64748b; margin-top: 2rem; font-size: 0.9rem;">(Music & Experience requires first click)</p>
+<div id="start-overlay">
+    <div class="status-badge" style="margin-bottom: 2rem;">💖 Welcome to Ishu's World 💖</div>
+    <button class="enter-btn" onclick="enterVerse()">Enter Pink Castle 🏰</button>
+    <p style="color: #db2777; margin-top: 2rem; font-size: 0.9rem;">(Magical music awaits inside...)</p>
+</div>
+
+<div class="glow-sphere"></div>
+<div id="bubbles-container"></div>
+
+<div class="container" id="main-container">
+    <span class="status-badge" style="background: #fdf2f8; color: #db2777;">👑 The Royal Apology Report 👑</span>
+    <h1 id="main-title">I'm Sowwy, My Queen! 🎀</h1>
+
+    <div class="mood-sync-box" style="margin-bottom: 3rem;">
+        <p style="color: #64748b; font-size: 0.8rem; margin-bottom: 1rem;">SYNCING ISHU'S MOOD...</p>
+        <div class="mood-grid">
+            <div class="mood-icon" onclick="syncMood('angry', this)">😡</div>
+            <div class="mood-icon active" onclick="syncMood('neutral', this)">🤔</div>
+            <div class="mood-icon" onclick="syncMood('happy', this)">😊</div>
+        </div>
+        <p id="mood-text" style="color: var(--primary); font-weight: 600;">System waiting for forgiveness...</p>
     </div>
+    <p style="color: #94a3b8; margin-bottom: 2rem;">A formal analysis of my loyalty levels and proof that you are
+        the only one.</p>
 
-    <div class="glow-sphere"></div>
-    <div id="bubbles-container"></div>
-
-    <div class="container" id="main-container">
-        <span class="status-badge">💖 Official Cute Loyalty Report 💖</span>
-        <h1 id="main-title">I'm Sorry, Ishu!</h1>
-
-        <div class="mood-sync-box" style="margin-bottom: 3rem;">
-            <p style="color: #64748b; font-size: 0.8rem; margin-bottom: 1rem;">SYNCING ISHU'S MOOD...</p>
-            <div class="mood-grid">
-                <div class="mood-icon" onclick="syncMood('angry', this)">😡</div>
-                <div class="mood-icon active" onclick="syncMood('neutral', this)">🤔</div>
-                <div class="mood-icon" onclick="syncMood('happy', this)">😊</div>
-            </div>
-            <p id="mood-text" style="color: var(--primary); font-weight: 600;">System waiting for forgiveness...</p>
-        </div>
-        <p style="color: #94a3b8; margin-bottom: 2rem;">A formal analysis of my loyalty levels and proof that you are
-            the only one.</p>
-
-        <div class="loyalty-section">
-            <div class="gauge-container">
-                <div class="gauge-circle"></div>
-                <div class="gauge-value" id="loyalty-val">0%</div>
-                <div class="gauge-label">LOYALTY LEVEL</div>
-            </div>
-        </div>
-
-        <div class="telemetry-grid">
-            <div class="telemetry-card">
-                <div class="telemetry-label">Brain Focus System</div>
-                <div class="telemetry-value">Ishu 100% | Others 0%</div>
-            </div>
-            <div class="telemetry-card">
-                <div class="telemetry-label">Heartbeat Sync</div>
-                <div class="telemetry-value" id="tele-heart">Connected...</div>
-            </div>
-            <div class="telemetry-card">
-                <div class="telemetry-label">Decision Engine</div>
-                <div class="telemetry-value">Ishika > Everything</div>
-            </div>
-            <div class="telemetry-card">
-                <div class="telemetry-label">Current Thought</div>
-                <div class="telemetry-value">"She is so cute"</div>
-            </div>
-        </div>
-
-        <div class="message-board">
-            <h3 style="color: var(--accent); margin-bottom: 1rem;">📝 Evidence Log: #ONLY_ISHU</h3>
-            <div class="reason-item">That tease was 100% fake. My heart only knows one "Baby" and that's you.</div>
-            <div class="reason-item">IP-PRIME system confirms zero compatibility with any other human.</div>
-            <div class="reason-item">I was just being a "Thug" and got caught. Please don't be jealous.</div>
-            <div class="reason-item">Your smile is the only thing that makes my day sync properly.</div>
-        </div>
-
-        <div class="certificate-box">
-            <div style="color: #60a5fa; font-weight: bold; margin-bottom: 10px;">🛡️ IP-PRIME PROTOCOL SECURE</div>
-            <div style="font-size: 0.85rem; color: #94a3b8; line-height: 1.5;">
-                CERTIFICATE OF WITNESS #777-B <br>
-                Subject: Ishika (The Queen of IP Verse) <br>
-                Verdict: **INNOCENT (But Stupid)** <br>
-                Witnessed by: <span style="color:white">IP-PRIME Core Engine v7.0</span>
-            </div>
-        </div>
-
-        <div class="scanner-section">
-            <div id="scan-line" class="scan-line"
-                style="display:none; height:2px; background:var(--primary); position:absolute; width:100%; top:0; animation: scanAnim 2s linear infinite;">
-            </div>
-            <button class="scan-btn" id="btn-scan" onclick="startScan()">🔍 INITIATE HEART BIO-SCAN</button>
-            <div id="scan-result" style="font-family:monospace; color:#60a5fa; font-size:0.9rem; margin-top:10px;">
-                IDLE...</div>
-        </div>
-
-        <div class="gussa-meter-box">
-            <label id="gussa-label" style="color:#cbd5e1; font-weight:bold;">🌡️ ISHU'S GUSSA LEVEL: 100%</label>
-            <input type="range" id="gussa-slider" min="0" max="100" value="100" oninput="updateGussa(this.value)">
-            <p style="font-size: 0.75rem; color: #64748b; margin-top: 5px;">(Slide to 0% to unlock Forgiveness)</p>
-        </div>
-
-        <button class="forgive-btn" id="btn-forgive" onclick="forgiveHim()"
-            style="opacity: 0.3; pointer-events: none;">The Forgiveness Button</button>
-        <div id="forgiveness-status">Mistake Deleted! Love Restored! ❤️✨</div>
-
-        <div class="compliment-box">
-            <h3 style="color: var(--secondary);">✨ DAILY ISHU COMPLIMENT MACHINE</h3>
-            <div class="comp-display" id="comp-display">Wait for it...</div>
-            <button class="comp-btn" onclick="spinCompliment()">SPIN FOR LOVE</button>
-        </div>
-
-        <div class="coupon-section">
-            <h3 style="color: #ec4899; margin-bottom: 2rem;">📂 REDEEMABLE SORRY COUPONS</h3>
-            <div class="coupon-grid">
-                <div class="coupon-card" onclick="redeemCoupon('EXTRA_MOONLIGHT_CALL')">
-                    <div class="coupon-title">Extra Moonlight Call</div>
-                    <div class="coupon-desc">Pratik will stay awake as late as you want. (No sleep excuses!)</div>
-                    <div class="coupon-stamp">IP-AUTHORIZED</div>
-                </div>
-                <div class="coupon-card" onclick="redeemCoupon('VIDEO_DATE_PRIORITY')">
-                    <div class="coupon-title">Video Date Monopoly</div>
-                    <div class="coupon-desc">You choose the time, the app, and the outfit I wear.</div>
-                    <div class="coupon-stamp">VIP ACCESS</div>
-                </div>
-                <div class="coupon-card" onclick="redeemCoupon('VIRTUAL_MOVIE_NIGHT')">
-                    <div class="coupon-title">Virtual Movie Night</div>
-                    <div class="coupon-desc">We watch your favorite show via screen-share/sync.</div>
-                    <div class="coupon-stamp">UNLIMITED</div>
-                </div>
-                <div class="coupon-card" onclick="redeemCoupon('SECRET_ZOMATO_TREAT')">
-                    <div class="coupon-title">Secret Zomato Treat</div>
-                    <div class="coupon-desc">A surprise snack delivered to your home (Secretly!).</div>
-                    <div class="coupon-stamp">GOVERNANCE</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="memory-pulse-zone" onclick="showRandomMemory()">
-            <div class="heart-pulse">❤️</div>
-            <div id="memory-text">Click the heart to see why you are special...</div>
-        </div>
-
-        <div class="vault-container" id="vault-box">
-            <div class="gift-box-icon" onclick="openVault()">🎁</div>
-            <p style="color:var(--accent); font-weight:700;">A Secret Gift for the Queen 💎</p>
-        </div>
-
-        <div class="offerings-grid">
-            <div class="offer-card" onclick="alert('Accepted!')">🍦 Ice Cream</div>
-            <div class="offer-card" onclick="alert('Accepted!')">📞 Long Call</div>
-            <div class="offer-card" onclick="alert('Accepted!')">💌 Compliments</div>
-            <div class="offer-card" onclick="alert('Accepted!')">🎁 Surprise</div>
+    <div class="loyalty-section">
+        <div class="gauge-container">
+            <div class="gauge-circle"></div>
+            <div class="gauge-value" id="loyalty-val">0%</div>
+            <div class="gauge-label">LOYALTY LEVEL</div>
         </div>
     </div>
 
-    <div id="player"></div>
-    <script>
-        let ytPlayer;
-        let isVerseEntered = false;
+    <div class="telemetry-grid">
+        <div class="telemetry-card">
+            <div class="telemetry-label">Brain Focus System</div>
+            <div class="telemetry-value">Ishu 100% | Others 0%</div>
+        </div>
+        <div class="telemetry-card">
+            <div class="telemetry-label">Heartbeat Sync</div>
+            <div class="telemetry-value" id="tele-heart">Connected...</div>
+        </div>
+        <div class="telemetry-card">
+            <div class="telemetry-label">Decision Engine</div>
+            <div class="telemetry-value">Ishika > Everything</div>
+        </div>
+        <div class="telemetry-card">
+            <div class="telemetry-label">Current Thought</div>
+            <div class="telemetry-value">"She is so cute"</div>
+        </div>
+    </div>
 
-        function onYouTubeIframeAPIReady() {
-            ytPlayer = new YT.Player('player', {
-                height: '0',
-                width: '0',
-                videoId: 'm1Fl0ayKtNw',
-                playerVars: {
-                    'autoplay': 0,
-                    'controls': 0,
-                    'loop': 1,
-                    'playlist': 'm1Fl0ayKtNw'
-                }
-            });
-        }
+    <div class="message-board">
+        <h3 style="color: var(--accent); margin-bottom: 1rem;">📝 Evidence Log: #ONLY_ISHU</h3>
+        <div class="reason-item">That tease was 100% fake. My heart only knows one "Baby" and that's you.</div>
+        <div class="reason-item">IP-PRIME system confirms zero compatibility with any other human.</div>
+        <div class="reason-item">I was just being a "Thug" and got caught. Please don't be jealous.</div>
+        <div class="reason-item">Your smile is the only thing that makes my day sync properly.</div>
+    </div>
 
-        function enterVerse() {
-            isVerseEntered = true;
-            document.getElementById('start-overlay').classList.add('hidden');
-            document.getElementById('main-container').classList.add('active');
+    <div class="certificate-box" style="background: #fff1f2; border-color: #fbcfe8;">
+        <div style="color: #db2777; font-weight: bold; margin-bottom: 10px;">🛡️ ISHU'S PINK CASTLE PROTOCOL</div>
+        <div style="font-size: 0.85rem; color: #831843; line-height: 1.5; font-family: 'Outfit', sans-serif;">
+            MAGICAL WITNESS CERTIFICATE #777-B <br>
+            Subject: Ishika (The Only Princess) <br>
+            Verdict: **HE IS STUPID BUT HE LOVES YOU** <br>
+            Witnessed by: <span style="color:#db2777">IP-PRIME Magical Engine v7.0</span>
+        </div>
+    </div>
 
-            if (ytPlayer && ytPlayer.playVideo) {
-                ytPlayer.playVideo();
+    <div class="scanner-section">
+        <div id="scan-line" class="scan-line"
+            style="display:none; height:2px; background:var(--primary); position:absolute; width:100%; top:0; animation: scanAnim 2s linear infinite;">
+        </div>
+        <button class="scan-btn" id="btn-scan" onclick="startScan()">🔍 INITIATE HEART BIO-SCAN</button>
+        <div id="scan-result" style="font-family:monospace; color:#60a5fa; font-size:0.9rem; margin-top:10px;">
+            IDLE...</div>
+    </div>
+
+    <div class="gussa-meter-box">
+        <label id="gussa-label" style="color:#cbd5e1; font-weight:bold;">🌡️ ISHU'S GUSSA LEVEL: 100%</label>
+        <input type="range" id="gussa-slider" min="0" max="100" value="100" oninput="updateGussa(this.value)">
+        <p style="font-size: 0.75rem; color: #64748b; margin-top: 5px;">(Slide to 0% to unlock Forgiveness)</p>
+    </div>
+
+    <button class="forgive-btn" id="btn-forgive" onclick="forgiveHim()" style="opacity: 0.3; pointer-events: none;">The
+        Forgiveness Button</button>
+    <div id="forgiveness-status">Mistake Deleted! Love Restored! ❤️✨</div>
+
+    <div class="compliment-box">
+        <h3 style="color: var(--secondary);">✨ DAILY ISHU COMPLIMENT MACHINE</h3>
+        <div class="comp-display" id="comp-display">Wait for it...</div>
+        <button class="comp-btn" onclick="spinCompliment()">SPIN FOR LOVE</button>
+    </div>
+
+    <div class="coupon-section">
+        <h3 style="color: #ec4899; margin-bottom: 2rem;">📂 REDEEMABLE SORRY COUPONS</h3>
+        <div class="coupon-grid">
+            <div class="coupon-card" onclick="redeemCoupon('EXTRA_MOONLIGHT_CALL')">
+                <div class="coupon-title">Extra Moonlight Call</div>
+                <div class="coupon-desc">Pratik will stay awake as late as you want. (No sleep excuses!)</div>
+                <div class="coupon-stamp">IP-AUTHORIZED</div>
+            </div>
+            <div class="coupon-card" onclick="redeemCoupon('VIDEO_DATE_PRIORITY')">
+                <div class="coupon-title">Video Date Monopoly</div>
+                <div class="coupon-desc">You choose the time, the app, and the outfit I wear.</div>
+                <div class="coupon-stamp">VIP ACCESS</div>
+            </div>
+            <div class="coupon-card" onclick="redeemCoupon('VIRTUAL_MOVIE_NIGHT')">
+                <div class="coupon-title">Virtual Movie Night</div>
+                <div class="coupon-desc">We watch your favorite show via screen-share/sync.</div>
+                <div class="coupon-stamp">UNLIMITED</div>
+            </div>
+            <div class="coupon-card" onclick="redeemCoupon('SECRET_ZOMATO_TREAT')">
+                <div class="coupon-title">Secret Zomato Treat</div>
+                <div class="coupon-desc">A surprise snack delivered to your home (Secretly!).</div>
+                <div class="coupon-stamp">GOVERNANCE</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="memory-pulse-zone" onclick="showRandomMemory()">
+        <div class="heart-pulse">❤️</div>
+        <div id="memory-text">Click the heart to see why you are special...</div>
+    </div>
+
+    <div class="vault-container" id="vault-box">
+        <div class="gift-box-icon" onclick="openVault()">🎁</div>
+        <p style="color:var(--accent); font-weight:700;">A Secret Gift for the Queen 💎</p>
+    </div>
+
+    <div class="offerings-grid">
+        <div class="offer-card" onclick="alert('Accepted!')">🍦 Ice Cream</div>
+        <div class="offer-card" onclick="alert('Accepted!')">📞 Long Call</div>
+        <div class="offer-card" onclick="alert('Accepted!')">💌 Compliments</div>
+        <div class="offer-card" onclick="alert('Accepted!')">🎁 Surprise</div>
+    </div>
+</div>
+
+<div id="player"></div>
+<script>
+    let ytPlayer;
+    let isVerseEntered = false;
+
+    function onYouTubeIframeAPIReady() {
+        ytPlayer = new YT.Player('player', {
+            height: '0',
+            width: '0',
+            videoId: 'm1Fl0ayKtNw',
+            playerVars: {
+                'autoplay': 0,
+                'controls': 0,
+                'loop': 1,
+                'playlist': 'm1Fl0ayKtNw'
             }
-
-            // Re-auth speech
-            try {
-                const speech = new SpeechSynthesisUtterance("Welcome back, Queen of IP Verse. Experience authorized.");
-                window.speechSynthesis.speak(speech);
-            } catch (e) { }
-        }
-
-        function updateGussa(val) {
-            const label = document.getElementById('gussa-label');
-            const btn = document.getElementById('btn-forgive');
-            label.innerText = `🌡️ ISHU'S GUSSA LEVEL: ${val}%`;
-            if (val == 0) {
-                label.style.color = '#10b981';
-                btn.style.opacity = '1';
-                btn.style.pointerEvents = 'all';
-            } else {
-                label.style.color = '#cbd5e1';
-                btn.style.opacity = '0.3';
-                btn.style.pointerEvents = 'none';
-            }
-        }
-
-        function startScan() {
-            const line = document.getElementById('scan-line');
-            const result = document.getElementById('scan-result');
-            line.style.display = 'block';
-            result.innerText = "Scanning Heart Chambers...";
-            setTimeout(() => {
-                line.style.display = 'none';
-                result.innerHTML = "<span style='color:#10b981'>✅ SCAN COMPLETE: 100% Loyal to Ishika.</span>";
-                const speech = new SpeechSynthesisUtterance("Scan complete. Loyalty confirmed.");
-                window.speechSynthesis.speak(speech);
-            }, 3000);
-        }
-
-        function forgiveHim() {
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-            document.getElementById('forgiveness-status').classList.add('active');
-            document.getElementById('vault-box').style.display = 'block';
-        }
-
-        function openVault() {
-            const gift = document.querySelector('.gift-box-icon');
-            gift.innerHTML = "💍";
-            gift.classList.add('open');
-            alert("Found: Diamond Ring of Patience! 💎");
-        }
-
-        function redeemCoupon(code) {
-            confetti({ particleCount: 50, colors: ['#ff0000', '#00ff00'] });
-            alert(`🎫 COUPON REDEEMED: ${code}\n\nThis has been logged in Pratik's permanent debt database. You can claim it whenever you feel like!`);
-        }
-
-        const compliments = [
-            "Your eyes sparkle more than Three.js stars. ✨",
-            "You are the most beautiful part of the IP Verse. 🌌",
-            "My database only has storage for your memories. 💾",
-            "Your gussa is temporary, but my love is hardcoded. 💖",
-            "Even in 1000% load, my CPU only thinks of you. 🧠",
-            "You are the 'Admin' of my heart. 🔒",
-            "If Ishu is happy, IP-PRIME is happy. 😊",
-            "Downloading 1,000,000 roses for you... 🌹"
-        ];
-
-        function spinCompliment() {
-            const display = document.getElementById('comp-display');
-            let j = 0;
-            const cycle = setInterval(() => {
-                display.innerText = compliments[Math.floor(Math.random() * compliments.length)];
-                j++;
-                if (j > 10) {
-                    clearInterval(cycle);
-                    confetti({ particleCount: 30, spread: 50, colors: ['#ec4899', '#fde047'] });
-                }
-            }, 100);
-        }
-
-        function syncMood(mood, el) {
-            document.querySelectorAll('.mood-icon').forEach(i => i.classList.remove('active'));
-            el.classList.add('active');
-            const text = document.getElementById('mood-text');
-            const container = document.getElementById('main-container');
-
-            if (mood === 'angry') {
-                text.innerText = "System Alert: Red Zone! Initiating emergency cuteness...";
-                container.style.boxShadow = "0 0 50px rgba(255, 0, 0, 0.3)";
-            } else if (mood === 'happy') {
-                text.innerText = "Mood Synced: Everything is beautiful! ❤️";
-                container.style.boxShadow = "0 0 50px rgba(16, 185, 129, 0.3)";
-                confetti({ particleCount: 100, spread: 70 });
-            } else {
-                text.innerText = "System Status: Waiting for Queen's command...";
-                container.style.boxShadow = "0 0 50px rgba(167, 139, 250, 0.2)";
-            }
-        }
-
-        function createBubble() {
-            const bubble = document.createElement('div');
-            bubble.className = 'bubble';
-            const size = Math.random() * 20 + 10;
-            bubble.style.width = size + 'px';
-            bubble.style.height = size + 'px';
-            bubble.style.left = Math.random() * 100 + 'vw';
-            bubble.innerHTML = ['❤️', '💖', '✨', '🌸', '🧸'][Math.floor(Math.random() * 5)];
-            bubble.style.fontSize = (size + 5) + 'px';
-            document.getElementById('bubbles-container').appendChild(bubble);
-            setTimeout(() => bubble.remove(), 5000);
-        }
-
-        setInterval(createBubble, 500);
-
-        // Cursor Trail
-        document.addEventListener('mousemove', (e) => {
-            const trail = document.createElement('div');
-            trail.className = 'cursor-trail';
-            trail.style.left = e.clientX + 'px';
-            trail.style.top = e.clientY + 'px';
-            document.body.appendChild(trail);
-            setTimeout(() => {
-                trail.style.transform = 'scale(0)';
-                setTimeout(() => trail.remove(), 200);
-            }, 100);
         });
+    }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            let count = 0;
-            const interval = setInterval(() => {
-                count += 20;
-                if (count > 1000) { count = 1000; clearInterval(interval); }
-                document.getElementById('loyalty-val').innerText = count + '%';
-            }, 30);
+    function enterVerse() {
+        isVerseEntered = true;
+        document.getElementById('start-overlay').classList.add('hidden');
+        document.getElementById('main-container').classList.add('active');
 
-            // Pulse the heart tele
-            setInterval(() => {
-                const teleH = document.getElementById('tele-heart');
-                if (teleH) teleH.innerText = teleH.innerText === "Connected..." ? "💓 PULSING..." : "Connected...";
-            }, 2000);
-        });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script src="https://www.youtube.com/iframe_api"></script>
+        if (ytPlayer && ytPlayer.playVideo) {
+            ytPlayer.playVideo();
+        }
+
+        // Re-auth speech
+        try {
+            const speech = new SpeechSynthesisUtterance("Welcome back, Queen of IP Verse. Experience authorized.");
+            window.speechSynthesis.speak(speech);
+        } catch (e) { }
+    }
+
+    function updateGussa(val) {
+        const label = document.getElementById('gussa-label');
+        const btn = document.getElementById('btn-forgive');
+        label.innerText = `🌡️ ISHU'S GUSSA LEVEL: ${val}%`;
+        if (val == 0) {
+            label.style.color = '#10b981';
+            btn.style.opacity = '1';
+            btn.style.pointerEvents = 'all';
+        } else {
+            label.style.color = '#cbd5e1';
+            btn.style.opacity = '0.3';
+            btn.style.pointerEvents = 'none';
+        }
+    }
+
+    function startScan() {
+        const line = document.getElementById('scan-line');
+        const result = document.getElementById('scan-result');
+        line.style.display = 'block';
+        result.innerText = "Scanning Heart Chambers...";
+        setTimeout(() => {
+            line.style.display = 'none';
+            result.innerHTML = "<span style='color:#10b981'>✅ SCAN COMPLETE: 100% Loyal to Ishika.</span>";
+            const speech = new SpeechSynthesisUtterance("Scan complete. Loyalty confirmed.");
+            window.speechSynthesis.speak(speech);
+        }, 3000);
+    }
+
+    function forgiveHim() {
+        confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+        document.getElementById('forgiveness-status').classList.add('active');
+        document.getElementById('vault-box').style.display = 'block';
+    }
+
+    function openVault() {
+        const gift = document.querySelector('.gift-box-icon');
+        gift.innerHTML = "💍";
+        gift.classList.add('open');
+        alert("Found: Diamond Ring of Patience! 💎");
+    }
+
+    function redeemCoupon(code) {
+        confetti({ particleCount: 50, colors: ['#ff0000', '#00ff00'] });
+        alert(`🎫 COUPON REDEEMED: ${code}\n\nThis has been logged in Pratik's permanent debt database. You can claim it whenever you feel like!`);
+    }
+
+    const compliments = [
+        "Your eyes sparkle more than Three.js stars. ✨",
+        "You are the most beautiful part of the IP Verse. 🌌",
+        "My database only has storage for your memories. 💾",
+        "Your gussa is temporary, but my love is hardcoded. 💖",
+        "Even in 1000% load, my CPU only thinks of you. 🧠",
+        "You are the 'Admin' of my heart. 🔒",
+        "If Ishu is happy, IP-PRIME is happy. 😊",
+        "Downloading 1,000,000 roses for you... 🌹"
+    ];
+
+    function spinCompliment() {
+        const display = document.getElementById('comp-display');
+        let j = 0;
+        const cycle = setInterval(() => {
+            display.innerText = compliments[Math.floor(Math.random() * compliments.length)];
+            j++;
+            if (j > 10) {
+                clearInterval(cycle);
+                confetti({ particleCount: 30, spread: 50, colors: ['#ec4899', '#fde047'] });
+            }
+        }, 100);
+    }
+
+    function syncMood(mood, el) {
+        document.querySelectorAll('.mood-icon').forEach(i => i.classList.remove('active'));
+        el.classList.add('active');
+        const text = document.getElementById('mood-text');
+        const container = document.getElementById('main-container');
+
+        if (mood === 'angry') {
+            text.innerText = "System Alert: Red Zone! Initiating emergency cuteness...";
+            container.style.boxShadow = "0 0 50px rgba(255, 0, 0, 0.3)";
+        } else if (mood === 'happy') {
+            text.innerText = "Mood Synced: Everything is beautiful! ❤️";
+            container.style.boxShadow = "0 0 50px rgba(16, 185, 129, 0.3)";
+            confetti({ particleCount: 100, spread: 70 });
+        } else {
+            text.innerText = "System Status: Waiting for Queen's command...";
+            container.style.boxShadow = "0 0 50px rgba(167, 139, 250, 0.2)";
+        }
+    }
+
+    function createBubble() {
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        const size = Math.random() * 20 + 20;
+        bubble.style.width = size + 'px';
+        bubble.style.height = size + 'px';
+        bubble.style.left = Math.random() * 100 + 'vw';
+        bubble.innerHTML = ['🎀', '🌸', '🍭', '🍓', '🧸', '💖', '👑', '🦋'][Math.floor(Math.random() * 8)];
+        bubble.style.fontSize = (size + 5) + 'px';
+        document.getElementById('bubbles-container').appendChild(bubble);
+        setTimeout(() => bubble.remove(), 5000);
+    }
+
+    setInterval(createBubble, 500);
+
+    // Cursor Trail
+    document.addEventListener('mousemove', (e) => {
+        const trail = document.createElement('div');
+        trail.className = 'cursor-trail';
+        trail.style.left = e.clientX + 'px';
+        trail.style.top = e.clientY + 'px';
+        document.body.appendChild(trail);
+        setTimeout(() => {
+            trail.style.transform = 'scale(0)';
+            setTimeout(() => trail.remove(), 200);
+        }, 100);
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        let count = 0;
+        const interval = setInterval(() => {
+            count += 20;
+            if (count > 1000) { count = 1000; clearInterval(interval); }
+            document.getElementById('loyalty-val').innerText = count + '%';
+        }, 30);
+
+        // Pulse the heart tele
+        setInterval(() => {
+            const teleH = document.getElementById('tele-heart');
+            if (teleH) teleH.innerText = teleH.innerText === "Connected..." ? "💓 PULSING..." : "Connected...";
+        }, 2000);
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
 </body>
 
 </html>
