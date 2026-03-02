@@ -548,8 +548,41 @@
         </div>
     </div>
 
+    <div id="player"></div>
+    <!-- YouTube API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script>
+        let ytPlayer;
+        function onYouTubeIframeAPIReady() {
+            ytPlayer = new YT.Player('player', {
+                height: '0',
+                width: '0',
+                videoId: 'm1Fl0ayKtNw',
+                playerVars: {
+                    'autoplay': 1,
+                    'controls': 0,
+                    'loop': 1,
+                    'playlist': 'm1Fl0ayKtNw'
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Browsers block autoplay with sound. We'll try to play.
+            event.target.playVideo();
+
+            // Fallback: Play on first click anywhere if browser blocked it
+            document.body.addEventListener('click', () => {
+                if (ytPlayer && ytPlayer.getPlayerState() !== 1) {
+                    ytPlayer.playVideo();
+                }
+            }, { once: true });
+        }
+
         function updateGussa(val) {
             const label = document.getElementById('gussa-label');
             const btn = document.getElementById('btn-forgive');
