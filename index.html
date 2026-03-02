@@ -12,18 +12,21 @@
         rel="stylesheet">
     <style>
         :root {
-            --primary: #f472b6;
-            /* Hot Pink */
-            --secondary: #fb7185;
-            /* Soft Rose */
-            --accent: #fef08a;
-            /* Soft Yellow */
-            --bg-dark: #fff1f2;
-            /* Ultra Soft Pink Background */
-            --glass: rgba(255, 255, 255, 0.8);
-            /* Milky Glass */
-            --border: rgba(244, 114, 182, 0.2);
-            --text-main: #be185d;
+            --primary: #ff8fa3;
+            /* Pastel Rose */
+            --secondary: #ff7eb3;
+            /* Sweet Pink */
+            --accent: #ffd1ff;
+            /* Lavender Glow */
+            --bg-start: #fff1f2;
+            /* Soft Peach */
+            --bg-end: #e0c3fc;
+            /* Dreamy Lavender */
+            --glass: rgba(255, 255, 255, 0.85);
+            --border: rgba(255, 126, 179, 0.3);
+            --text-main: #9d174d;
+            /* Deep Magenta */
+            --shadow-color: rgba(255, 143, 163, 0.25);
         }
 
         * {
@@ -34,7 +37,9 @@
 
         body {
             font-family: 'Outfit', sans-serif;
-            background: linear-gradient(135deg, #fff1f2 0%, #fae8ff 100%);
+            background: linear-gradient(135deg, var(--bg-start) 0%, #fef2f2 25%, #fae8ff 50%, #f5f3ff 75%, var(--bg-end) 100%);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             color: var(--text-main);
             min-height: 100vh;
             overflow-x: hidden;
@@ -42,6 +47,20 @@
             justify-content: center;
             align-items: center;
             padding: 2rem;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         .glow-sphere {
@@ -71,17 +90,18 @@
             width: 100%;
             max-width: 900px;
             background: var(--glass);
-            backdrop-filter: blur(20px);
-            border: 4px solid #f9a8d4;
+            backdrop-filter: blur(25px);
+            border: 3px solid white;
+            outline: 2px solid var(--border);
             border-radius: 40px;
             padding: 4rem;
             position: relative;
-            box-shadow: 0 20px 60px rgba(244, 114, 182, 0.2);
+            box-shadow: 0 40px 100px var(--shadow-color), inset 0 0 20px rgba(255, 255, 255, 0.5);
             text-align: center;
             z-index: 10;
             opacity: 0;
             transform: translateY(20px);
-            transition: 1s ease;
+            transition: 1.5s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         .container.active {
@@ -149,7 +169,7 @@
         }
 
         .enter-btn {
-            background: linear-gradient(135deg, #a78bfa 0%, #ec4899 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             border: none;
             padding: 1.5rem 4rem;
             color: white;
@@ -157,15 +177,15 @@
             font-weight: 800;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 0 30px rgba(167, 139, 250, 0.5);
-            transition: 0.3s;
+            box-shadow: 0 0 30px var(--shadow-color);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-transform: uppercase;
             letter-spacing: 2px;
         }
 
         .enter-btn:hover {
             transform: scale(1.1);
-            box-shadow: 0 0 50px rgba(236, 72, 153, 0.8);
+            box-shadow: 0 0 50px var(--shadow-color);
         }
 
         h1 {
@@ -181,16 +201,17 @@
 
         .status-badge {
             display: inline-block;
-            padding: 8px 20px;
-            background: rgba(236, 72, 153, 0.1);
-            border: 1px solid rgba(236, 72, 153, 0.3);
+            padding: 10px 24px;
+            background: white;
+            border: 1px solid var(--border);
             border-radius: 50px;
-            color: #f472b6;
-            font-weight: 600;
-            font-size: 0.9rem;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 2rem;
+            box-shadow: 0 5px 15px var(--shadow-color);
             animation: float 3s ease-in-out infinite;
         }
 
@@ -404,13 +425,14 @@
             border-radius: 12px;
             font-weight: 700;
             cursor: pointer;
-            transition: 0.3s;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             margin-bottom: 1rem;
         }
 
         .scan-btn:hover {
             background: var(--primary);
             color: white;
+            box-shadow: 0 0 20px var(--primary);
         }
 
         .gussa-meter-box {
@@ -460,7 +482,7 @@
         }
 
         .forgive-btn {
-            background: linear-gradient(to right, #ec4899, #f43f5e);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             border: none;
             padding: 1.5rem 3rem;
             border-radius: 50px;
@@ -468,14 +490,15 @@
             font-size: 1.2rem;
             font-weight: 800;
             cursor: pointer;
-            box-shadow: 0 10px 20px rgba(236, 72, 153, 0.3);
-            transition: 0.3s;
+            box-shadow: 0 10px 20px var(--shadow-color);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: inline-block;
             margin: 2rem 0;
         }
 
         .forgive-btn:hover {
             transform: scale(1.05);
+            box-shadow: 0 15px 30px var(--shadow-color);
         }
 
         /* Compliment Machine */
@@ -497,19 +520,20 @@
         }
 
         .comp-btn {
-            background: var(--glass);
-            border: 2px solid var(--secondary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border: none;
             color: white;
-            padding: 0.8rem 2rem;
+            padding: 1rem 2.5rem;
             border-radius: 50px;
             cursor: pointer;
-            font-weight: 700;
-            transition: 0.3s;
+            font-weight: 800;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 20px var(--shadow-color);
         }
 
         .comp-btn:hover {
-            background: var(--secondary);
-            box-shadow: 0 0 15px var(--secondary);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 30px var(--shadow-color);
         }
 
         /* Mood Sync Icons */
